@@ -13,7 +13,7 @@ class WorkerClientBuilder {
 	Integer numberOfRetries;
 	String scopeType;
 
-	public static WorkerClientBuilder create() {
+	static WorkerClientBuilder create() {
 		return new WorkerClientBuilder();
 	}
 
@@ -51,6 +51,7 @@ class WorkerClientBuilder {
 		this.scopeType = scopeType;
 		return this;
 	}
+	
 	public WorkerClient build() {
 		WorkerClient client = new WorkerClient(this);
 		return client;

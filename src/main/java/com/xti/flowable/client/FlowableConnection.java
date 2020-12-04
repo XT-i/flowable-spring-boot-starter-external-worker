@@ -31,11 +31,9 @@ public class FlowableConnection {
 	
 	private WorkerClient client;
 	
-	public FlowableConnection client(WorkerClient client) {
+	void setClient(WorkerClient client) {
 		this.client = client;
-		return this;
 	}
-	
 	
 	public List<AcquiredJobs> acquireJobs() {
 		LOGGER.info("acquiring jobs for " + client.topic + ". Connecting to " + client.url);

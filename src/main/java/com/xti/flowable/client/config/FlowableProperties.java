@@ -12,6 +12,9 @@ public class FlowableProperties {
 	}
 
 	public void setUrl(String url) {
+		if(url.endsWith("/")) {
+			url = url.substring(0,url.length()-1);
+		}
 		this.url = url;
 	}
 

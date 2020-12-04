@@ -37,8 +37,8 @@ class FlowableWorkerPostProcessor implements BeanPostProcessor{
 					try {
 						field.setAccessible(true);
 						Object o = field.get(bean);
-
-						Method method = o.getClass().getMethod("client", WorkerClient.class);
+											
+						Method method = o.getClass().getDeclaredMethod("setClient", WorkerClient.class);
 						
 						if(method != null) {																				
 							if(flowableConfig.getUrl() != null) {

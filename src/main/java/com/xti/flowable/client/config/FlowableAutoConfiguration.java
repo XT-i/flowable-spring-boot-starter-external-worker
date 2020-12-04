@@ -14,11 +14,13 @@ public class FlowableAutoConfiguration {
 
 	@Autowired
 	private FlowableProperties flowableProperties;
+	
+	private static final String ENGINE_API_PATH = "/acquire/jobs";
 
 	@Bean
 	public FlowableConfig flowableConfig() {
 		FlowableConfig flowableConfig = new FlowableConfig();
-		flowableConfig.setUrl(flowableProperties.getUrl());
+		flowableConfig.setUrl(flowableProperties.getUrl() + ENGINE_API_PATH);
 		return flowableConfig;
 	}
 	
