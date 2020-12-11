@@ -3,6 +3,7 @@ Flowable external worker spring boot starter
 This spring boot starter will make life easier when using External Tasks in Flowable. This starter will do the pulling and handling of the status of the jobs for you.
 
 How to use : 
+ 
  - Import the maven dependency
 	<dependency>
 		<groupId>com.xti.flowable</groupId>
@@ -12,6 +13,9 @@ How to use :
  
  - In your application properties set the flowable-engine api url with the key flowable.external.url i.e. : flowable.external.url = http://localhost:8080/external-job-api
  
+ To implement the worker, there are 2 flavors : on the class or on the method
+ 
+ On the Class : 
  - On the class that will handle the job for a specific topic, put the annotation @FlowableWorker.
    Parameters from the annotation: 
    topic : (mandatory) topic to get the jobs from
@@ -26,8 +30,30 @@ How to use :
    @Autowired
    FlowableConnection connection
    
- - Now you can use the field you defined to acquire jobs, mark them as completed ,.....
-   Methods to acquire and manipulate the jobs : 
+ - Now you can use the field you defined to acquire jobs, mark them as completed ,..
+ Methods to acquire and manipulate the jobs : 
+   acquireJobs
+   complete
+   bpmnError
+   cmmnTerminate
+   fail
+   
+On the method:
+- On the method that will handle the job for a specific topic, put  the annotation @FlowableWorker
+	Parameters from the annotation: 
+   topic : (mandatory) topic to get the jobs from
+   workerId : (mandatory) unique workerId that will take the lock
+   lockDuration : the time the job will be locked by the worker. Format is ISO-8601 duration. i.e. 10 minutes will translate to PT10M. The default value is 10 minutes
+   maxTasks : the maximum number of tasks that will be acquired. Default value is 10
+   numberOfRetries : The number of retries if an optimistic lock exception occurs during acquiring. Default is 10
+   scopeType : Only acquire jobs with the given scope type.
+   
+- The method should take a FlowableConnection as a parameter. This parameter is filled when the method is called.
+
+- When calling the method, the parameter FlowableConnection will be filled. Make sure that the class that contains the method is created using the Spring Container !!
+
+ - Now you can use the field you defined to acquire jobs, mark them as completed ,..
+ Methods to acquire and manipulate the jobs : 
    acquireJobs
    complete
    bpmnError
