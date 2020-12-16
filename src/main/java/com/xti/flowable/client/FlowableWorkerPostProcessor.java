@@ -45,7 +45,7 @@ class FlowableWorkerPostProcessor implements BeanPostProcessor{
 								WorkerClient client = WorkerClientBuilder.create()
 										.toUrl(flowableConfig.getUrl())
 										.topic(worker.topic())
-										.workerId(worker.workerId())
+										.workerId(flowableConfig.getWorkerId())
 										.maxTasks(worker.maxTasks())
 										.lockDuration(worker.lockDuration())
 										.numberOfRetries(worker.numberOfRetries())

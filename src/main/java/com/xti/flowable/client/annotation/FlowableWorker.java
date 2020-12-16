@@ -15,8 +15,6 @@ public @interface FlowableWorker {
 
 	public String topic();
 
-	public String workerId();
-
 	public int maxTasks() default 10;
 
 	public String lockDuration() default "PT10M";
