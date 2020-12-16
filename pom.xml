@@ -30,5 +30,25 @@
             <version>${spring-boot.version}</version>
         </dependency>
     </dependencies>
+    
+	<distributionManagement>
+		<repository>
+			<id>io.cloudrepo.xti.opensource</id>
+			<name>XTi Open Source Maven Repo</name>
+			<url>https://xti.mycloudrepo.io/repositories/opensource</url>
+		</repository>
+	</distributionManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-deploy-plugin</artifactId>
+			  <configuration>
+			    <skip>false</skip>
+			  </configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
