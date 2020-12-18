@@ -4,59 +4,33 @@ This spring boot starter will make life easier when using External Tasks in Flow
 
 How to use : 
  
- - Import the maven dependency
+ Import the maven dependency
 	<dependency>
 		<groupId>com.xti.flowable</groupId>
 		<artifactId>flowable-externalworker-client-spring-boot-starter</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
  
- - In your application properties set the flowable-engine api url with the key flowable.external.url i.e. : flowable.external.url = http://localhost:8080/external-job-api
+  In your application properties : 
  
- To implement the worker, there are 2 flavors : on the class or on the method
+	- set the flowable-engine api url with the key flowable.external.url i.e. : flowable.external.url = http://localhost:8080/external-job-api
+	- set the worker ID with the key flowable.external.workerId
  
- On the Class : 
- - On the class that will handle the job for a specific topic, put the annotation @FlowableWorker.
-   Parameters from the annotation: 
-   topic : (mandatory) topic to get the jobs from
-   workerId : (mandatory) unique workerId that will take the lock
-   lockDuration : the time the job will be locked by the worker. Format is ISO-8601 duration. i.e. 10 minutes will translate to PT10M. The default value is 10 minutes
-   maxTasks : the maximum number of tasks that will be acquired. Default value is 10
-   numberOfRetries : The number of retries if an optimistic lock exception occurs during acquiring. Default is 10
-   scopeType : Only acquire jobs with the given scope type.
-   
- - In that class make a field of the type FlowableConnection (use the spring container to instantiate it) 
-   i.e: 
-   @Autowired
-   FlowableConnection connection
-   
- - Now you can use the field you defined to acquire jobs, mark them as completed ,..
- Methods to acquire and manipulate the jobs : 
-   acquireJobs
-   complete
-   bpmnError
-   cmmnTerminate
-   fail
-   
-On the method:
-- On the method that will handle the job for a specific topic, put  the annotation @FlowableWorker
+ To implement the worker : 
+
+- On the method that will handle the job for a specific topic, put the annotation @FlowableWorker
 	Parameters from the annotation: 
-   topic : (mandatory) topic to get the jobs from
-   workerId : (mandatory) unique workerId that will take the lock
-   lockDuration : the time the job will be locked by the worker. Format is ISO-8601 duration. i.e. 10 minutes will translate to PT10M. The default value is 10 minutes
-   maxTasks : the maximum number of tasks that will be acquired. Default value is 10
-   numberOfRetries : The number of retries if an optimistic lock exception occurs during acquiring. Default is 10
-   scopeType : Only acquire jobs with the given scope type.
+	topic : (mandatory) topic to get the jobs from
+	lockDuration : the time the job will be locked by the worker. Format is ISO-8601 duration. i.e. 10 minutes will translate to PT10M. The default value is 10 minutes
+	maxTasks : the maximum number of tasks that will be acquired. Default value is 10
+	numberOfRetries : The number of retries if an optimistic lock exception occurs during acquiring. Default is 10
+	scopeType : Only acquire jobs with the given scope type.
    
-- The method should take a FlowableConnection as a parameter. This parameter is filled when the method is called.
-
-- When calling the method, the parameter FlowableConnection will be filled. Make sure that the class that contains the method is created using the Spring Container !!
-
- - Now you can use the field you defined to acquire jobs, mark them as completed ,..
- Methods to acquire and manipulate the jobs : 
-   acquireJobs
+- The method should take a AcquiredJob as parameter. This method should define the logic to handle the acquiredJob.
+  Methods to manipulate the jobs : 
    complete
    bpmnError
    cmmnTerminate
    fail
- 
+   
+- The method is automatically called when a acquiredJob is available.
