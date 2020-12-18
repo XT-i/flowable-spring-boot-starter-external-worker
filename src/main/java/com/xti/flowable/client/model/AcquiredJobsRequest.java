@@ -2,7 +2,7 @@ package com.xti.flowable.client.model;
 
 import java.util.List;
 
-public class AcquiredJobs {
+public class AcquiredJobsRequest {
 
 	private String id;
 	private String url;

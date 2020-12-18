@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.xti.flowable.client.model.AcquireJobsRequest;
-import com.xti.flowable.client.model.AcquiredJobs;
+import com.xti.flowable.client.model.AcquiredJobsRequest;
 import com.xti.flowable.client.model.BpmnErrorRequest;
 import com.xti.flowable.client.model.EngineVariable;
 import com.xti.flowable.client.model.FailRequest;
@@ -35,7 +35,7 @@ public class FlowableConnection {
 		this.client = client;
 	}
 	
-	public List<AcquiredJobs> acquireJobs() {
+	List<AcquiredJobsRequest> acquireJobs() {
 		LOGGER.info("acquiring jobs for " + client.topic + ". Connecting to " + client.url);
 		AcquireJobsRequest request = new AcquireJobsRequest();
 		request.setTopic(client.topic);
@@ -46,13 +46,13 @@ public class FlowableConnection {
 		if(!client.scopeType.equals("")) {
 			request.setScopeType(client.scopeType);	
 		}
-		ResponseEntity<AcquiredJobs[]> response = restTemplate.postForEntity(client.url, request, AcquiredJobs[].class);
+		ResponseEntity<AcquiredJobsRequest[]> response = restTemplate.postForEntity(client.url, request, AcquiredJobsRequest[].class);
 		
 		if(response.getStatusCodeValue() == 200) {
 			return Arrays.asList(response.getBody());
 		}else {
 			LOGGER.warn("Error acquiring jobs " + response.getStatusCode().getReasonPhrase());
-			return new ArrayList<AcquiredJobs>();
+			return new ArrayList<AcquiredJobsRequest>();
 		}
 		
 	}
