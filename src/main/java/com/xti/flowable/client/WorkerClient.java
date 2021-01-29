@@ -12,6 +12,8 @@ class WorkerClient {
 	String lockDuration;
 	Integer numberOfRetries;
 	String scopeType;
+	String username;
+	String password;
 
 
 	protected WorkerClient(WorkerClientBuilder builder) {
@@ -22,6 +24,8 @@ class WorkerClient {
 		this.lockDuration = builder.lockDuration;
 		this.numberOfRetries = builder.numberOfRetries;
 		this.scopeType = builder.scopeType;
+		this.username = builder.username;
+		this.password = builder.password;
 	}
 	
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,6 +34,12 @@ public class FlowableConnection {
 	
 	void setClient(WorkerClient client) {
 		this.client = client;
+		if ( client.username != null && !"".equals(client.username.trim())) {
+			LOGGER.info("authenticating to Flowable REST API with username '" + client.username + "'");
+			restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(client.username, client.password));
+		} else {
+			LOGGER.info("not authenticating to Flowable REST API");
+		}
 	}
 	
 	List<AcquiredJobsRequest> acquireJobs() {
@@ -46,6 +53,7 @@ public class FlowableConnection {
 		if(!client.scopeType.equals("")) {
 			request.setScopeType(client.scopeType);	
 		}
+		
 		ResponseEntity<AcquiredJobsRequest[]> response = restTemplate.postForEntity(client.url, request, AcquiredJobsRequest[].class);
 		
 		if(response.getStatusCodeValue() == 200) {

@@ -52,6 +52,8 @@ public class FlowableHandler {
 		WorkerClient client = WorkerClientBuilder.create()
 												.toUrl(flowableConfig.getUrl())
 												.topic(worker.topic())
+												.username(flowableConfig.getUsername())
+												.password(flowableConfig.getPassword())
 												.workerId(flowableConfig.getWorkerId())
 												.maxTasks(worker.maxTasks())
 												.lockDuration(worker.lockDuration())

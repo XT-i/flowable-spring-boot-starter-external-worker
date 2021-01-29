@@ -24,6 +24,8 @@ public class FlowableAutoConfiguration {
 		FlowableConfig flowableConfig = new FlowableConfig();
 		flowableConfig.setUrl(flowableProperties.getUrl() + ENGINE_API_PATH);
 		flowableConfig.setWorkerId(flowableProperties.getWorkerId());
+		flowableConfig.setUsername(flowableProperties.getUsername());
+		flowableConfig.setPassword(flowableProperties.getPassword());
 		return flowableConfig;
 	}
 	

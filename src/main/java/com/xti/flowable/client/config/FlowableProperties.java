@@ -7,6 +7,8 @@ public class FlowableProperties {
 
 	private String url = "http://localhost:8080";
 	private String workerId = "workerId";
+	private String username = null;
+	private String password = null;
 
 	public String getUrl() {
 		return url;
@@ -25,6 +27,22 @@ public class FlowableProperties {
 
 	public void setWorkerId(String workerId) {
 		this.workerId = workerId;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

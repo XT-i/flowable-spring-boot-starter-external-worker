@@ -12,6 +12,8 @@ class WorkerClientBuilder {
 	String lockDuration;
 	Integer numberOfRetries;
 	String scopeType;
+	String username;
+	String password;
 
 	static WorkerClientBuilder create() {
 		return new WorkerClientBuilder();
@@ -39,6 +41,16 @@ class WorkerClientBuilder {
 
 	public WorkerClientBuilder lockDuration(String lockDuration) {
 		this.lockDuration = lockDuration;
+		return this;
+	}
+
+	public WorkerClientBuilder username(String username) {
+		this.username = username;
+		return this;
+	}
+
+	public WorkerClientBuilder password(String password) {
+		this.password = password;
 		return this;
 	}
 
